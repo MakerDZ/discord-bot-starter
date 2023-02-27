@@ -14,6 +14,6 @@ class Handling{
 
 export default class Commands extends Handling{
     public async handle(){
-        is_ping_pong(this.interaction);
+        await is_ping_pong(this.interaction);
     }
 }

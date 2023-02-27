@@ -10,7 +10,12 @@ export default {
         if(!interaction.isChatInputCommand()) return;
 
         if(interaction.isChatInputCommand()){
-            commands.handle();
+            try {
+                await commands.handle();
+            } catch (error) {
+                console.error(error);
+                await interaction.reply('An error occurred while executing the command.');
+            }
         }
     }
 }

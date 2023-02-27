@@ -1,6 +1,7 @@
 {
-  "name": "ma-guardian-bot",
+  "name": "discord-bot-starter",
   "version": "1.0.0",
+  "description": "🌿 A simple, beginner-friendly TypeScript Discord bot starter template.",
   "main": "src/index.ts",
   "license": "MIT",
   "scripts": {
