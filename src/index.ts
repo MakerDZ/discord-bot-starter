@@ -1,8 +1,8 @@
 import { Client, GatewayIntentBits, ActivityType } from "discord.js"; 
 import 'dotenv/config';
-import * as fs from 'fs';
-import { join } from 'path';
+import loadEvents from "./libraries/eventHandling";
 
+//Initializing Intents
 const client = new Client({
     intents : [ 
         GatewayIntentBits.DirectMessages,
@@ -21,23 +21,9 @@ const client = new Client({
     },
 })
 
-// Event Handling 
-const eventsFolder = join(__dirname, 'events');
-function loadEvents() {
-    const eventFiles = fs.readdirSync(eventsFolder).filter(file => file.endsWith('.ts'));
-    for (const file of eventFiles) {
-        const { default: event } = require(join(eventsFolder, file));
-        if (event.once) {
-        client.once(event.name, (...args) => event.execute(...args, client, process.env.BOT_TOKEN, process.env.CLIENT_ID, process.env.GUILD_ID));
-        } else {
-        client.on(event.name, (...args) => event.execute(...args, client, process.env.BOT_TOKEN, process.env.CLIENT_ID, process.env.GUILD_ID));
-        }
-    }
-}
-
-// Login Into Bot
+// Login Into Bot and Loading Events, Commands
 client.login(process.env.BOT_TOKEN).then(()=>{
-    loadEvents();
+    loadEvents(client, process.env.BOT_TOKEN, process.env.CLIENT_ID, process.env.GUILD_ID);
 }).catch(err => {
     console.log(`There is error : ${err}`);
 })
